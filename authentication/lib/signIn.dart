@@ -25,6 +25,12 @@ class _WelcomePageState extends State<WelcomePage> {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
+  void signOut() {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    googleSignIn.signOut();
+    print('user signed out');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,9 +39,24 @@ class _WelcomePageState extends State<WelcomePage> {
         backgroundColor: Colors.black38,
       ),
       body: Container(
-        child: Center(
-            child: ElevatedButton(
-                onPressed: signIn, child: const Text('Sign In'))),
+        child: Column(
+          children: [
+            Center(
+                child: ElevatedButton(
+                    onPressed: signIn,
+                    child: const Text('SignIn with Google'))),
+            Center(
+                child: ElevatedButton(
+                    onPressed: signOut, child: const Text('Sign out'))),
+            Center(
+                child: ElevatedButton(
+                    onPressed: null, child: Text('SignIn with Facebook'))),
+            // ignore: prefer_const_constructors
+            Center(
+                child: ElevatedButton(
+                    onPressed: null, child: Text('SignIn with Github')))
+          ],
+        ),
       ),
     );
   }
