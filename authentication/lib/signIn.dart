@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -44,9 +46,54 @@ class _WelcomePageState extends State<WelcomePage> {
     documentReference.set(data).whenComplete(() => print('document added'));
   }
 
+  // String dataFetched = "";
+  Map dataFromBackend = {
+    "name": "loading...",
+    "company": "loading...",
+    "projects": "loading...",
+    "add": "loading..."
+  };
+
   void fetch() {
-    documentReference.get().whenComplete(() => print('document fetched!'));
+    documentReference
+        .get()
+        .whenComplete(() => print('document fetched!'))
+        .then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          dataFromBackend = datasnapshot.data() as Map;
+        });
+
+        // print(datasnapshot.data());
+
+        print(dataFromBackend);
+      } else {
+        print('document is empty');
+        dataFromBackend["name"] = "unknown";
+      }
+    });
   }
+
+  // late StreamSubscription<DocumentReference> subscription;
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   subscription = documentReference.snapshots().listen((datasnapshot) {
+  //     if (datasnapshot.exists) {
+  //       setState(() {
+  //         dataFromBackend = datasnapshot.data() as Map;
+  //       });
+  //     }
+  //   }) as StreamSubscription<DocumentReference<Object?>>;
+  //   super.initState();
+  // }
+
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   super.dispose();
+  //   subscription.cancel();
+  // }
 
   void update() {
     Map<String, String> updatedData = <String, String>{
@@ -62,6 +109,13 @@ class _WelcomePageState extends State<WelcomePage> {
 
   void _delete() {
     documentReference.delete().whenComplete(() => print('document deleted'));
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    fetch();
+    super.initState();
   }
 
   @override
@@ -94,7 +148,26 @@ class _WelcomePageState extends State<WelcomePage> {
                 child: ElevatedButton(
               onPressed: _delete,
               child: Text('Delete Data'),
-            ))
+            )),
+            // ignore: unnecessary_null_comparison
+            // dataFetched == null
+            //     ? Container()
+            //     : Text("$dataFetched.data!['name']")
+            // Text(dataFromBackend['name'])
+            // dataFromBackend == {}
+            //     ? Container(
+            //         child: Text('document is empty'),
+            //       )
+            //     : Text(dataFromBackend['name'])
+            // Text(
+            //   dataFromBackend['name'],
+            //   style: TextStyle(fontSize: 20),
+            // ),
+            // Text(dataFromBackend['add']),
+            // dataFromBackend == null ? Text('Data is empty') : Text("")
+            dataFromBackend["name"] == "unknown"
+                ? Text("Database Empty")
+                : Text(dataFromBackend["name"])
           ],
         ),
       ),
