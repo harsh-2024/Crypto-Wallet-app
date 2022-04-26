@@ -50,6 +50,7 @@ class _NewUserRegState extends State<NewUserReg> {
           TextFormField(
               onChanged: (value) => {pwdNew = value},
               style: TextStyle(color: Colors.white),
+              obscureText: true,
               cursorColor: Colors.white24,
               decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
@@ -81,23 +82,3 @@ class _NewUserRegState extends State<NewUserReg> {
     );
   }
 }
-
-// class Button extends StatelessWidget {
-//   const Button({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return InkWell(
-//       onTap: ,
-//       child: Container(
-//         child: Center(child: Text('Go')),
-//         height: 40,
-//         width: 100,
-//         decoration: BoxDecoration(
-//           color: Colors.blue.shade500,
-//           borderRadius: BorderRadius.circular(20),
-//         ),
-//       ),
-//     );
-//   }
-// }

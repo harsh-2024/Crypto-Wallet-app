@@ -43,6 +43,10 @@ class _LoginPageState extends State<LoginPage> {
         .signInWithEmailAndPassword(email: email, password: pwd);
   }
 
+  Future<void> forgotPassEmailLink() async {
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,6 +84,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             TextFormField(
                 onChanged: (value) => {pwd = value},
+                obscureText: true,
                 style: TextStyle(color: Colors.white),
                 cursorColor: Colors.white24,
                 decoration: InputDecoration(
@@ -115,6 +120,14 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   width: 20,
                 ),
+                InkWell(
+                  onTap: () => forgotPassEmailLink(),
+                  child: Text(
+                    'Forgot Password?',
+                    style: TextStyle(color: Colors.blueAccent),
+                  ),
+                ),
+                SizedBox(width: 50),
                 NewUserLink()
               ],
             )),
@@ -155,74 +168,12 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             )
-            // Center(
-            //     child: Text(
-            //   'OR',
-            //   style: TextStyle(
-            //       color: Colors.white,
-            //       fontSize: 20,
-            //       fontWeight: FontWeight.w100),
-            // ))
           ],
         ),
       ),
     );
   }
 }
-
-// class Button extends StatelessWidget {
-//   const Button({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return InkWell(
-//       onTap: null,
-//       child: Container(
-//         child: Center(child: Text('Go')),
-//         height: 40,
-//         width: 100,
-//         decoration: BoxDecoration(
-//           color: Colors.blue.shade500,
-//           borderRadius: BorderRadius.circular(20),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class GoogleButton extends StatelessWidget {
-//   const GoogleButton({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Center(
-//       child: InkWell(
-//         onTap: () => signIn,
-//         child: Container(
-//           padding: EdgeInsets.all(7),
-//           decoration: BoxDecoration(
-//               borderRadius: BorderRadius.circular(20),
-//               color: Colors.blue.shade500),
-//           height: 40,
-//           width: 200,
-//           child: Row(
-//               crossAxisAlignment: CrossAxisAlignment.stretch,
-//               children: <Widget>[
-//                 Image.asset(
-//                   'images/ggl (1).png',
-//                   scale: 8,
-//                 ),
-//                 SizedBox(width: 15),
-//                 Text(
-//                   'Sign In with Google',
-//                   style: TextStyle(color: Colors.black),
-//                 )
-//               ]),
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class NewUserLink extends StatelessWidget {
   const NewUserLink({Key? key}) : super(key: key);
@@ -234,6 +185,21 @@ class NewUserLink extends StatelessWidget {
           context, MaterialPageRoute(builder: (context) => NewUserReg())),
       child: Text(
         'New User',
+        style: TextStyle(color: Colors.blueAccent),
+      ),
+    );
+  }
+}
+
+class ForgotPass extends StatelessWidget {
+  const ForgotPass({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => null,
+      child: Text(
+        'Forgot Password?',
         style: TextStyle(color: Colors.blueAccent),
       ),
     );
