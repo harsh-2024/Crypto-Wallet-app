@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'addMoneypage.dart';
+
+int addedAmount = 0;
+
+Map<dynamic, dynamic> fetchedData = <String, dynamic>{
+  "walletAmount": 0,
+  "btcAmount": 0
+};
 
 class Screen1 extends StatefulWidget {
   const Screen1({Key? key}) : super(key: key);
@@ -12,6 +20,19 @@ class Screen1 extends StatefulWidget {
 }
 
 class _Screen1State extends State<Screen1> {
+  void fetchWalletAmount() async {
+    await documentReference.get().then((datasnapshot) => {
+          addedAmount = fetchedData["walletAmount"],
+          if (datasnapshot.exists)
+            {
+              setState(() => {fetchedData = datasnapshot.data() as Map})
+            }
+          else
+            {fetchedData["name"] = "unknown"}
+        });
+    print(fetchedData["walletAmount"]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,91 +55,47 @@ class _Screen1State extends State<Screen1> {
                         fontWeight: FontWeight.w300),
                   ),
                   Text(
-                    ' ₹  --- ',
+                    ' ₹$addedAmount',
                     style: TextStyle(color: Colors.white, fontSize: 40),
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  InkWell(
-                    onTap: () => null,
-                    child: Container(
-                      child: Center(child: Text('Add Money')),
-                      height: 40,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.blue.shade500,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 50),
                   Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Card(
-                          child: InkWell(
-                              onTap: () => print('BTC'),
-                              splashColor: Colors.black45,
-                              child: SizedBox(
-                                  height: 150,
-                                  width: 150,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        'BTC',
-                                        style: TextStyle(
-                                            fontSize: 30,
-                                            fontWeight: FontWeight.w300),
-                                      ),
-                                      SizedBox(
-                                        height: 15,
-                                      ),
-                                      Text('Invested: '),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text('Current: '),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(children: <Widget>[
-                                        InkWell(
-                                          onTap: () => null,
-                                          child: Container(
-                                            child: Center(child: Text('Buy')),
-                                            height: 40,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                              color: Colors.grey,
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(width: 10),
-                                        InkWell(
-                                          onTap: () => null,
-                                          child: Container(
-                                            child: Center(child: Text('Sell')),
-                                            height: 40,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                              color: Colors.grey,
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                          ),
-                                        ),
-                                      ]),
-                                    ],
-                                  ))),
+                    children: [
+                      InkWell(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => InputAmount())),
+                        child: Container(
+                          child: Center(child: Text('Add Money')),
+                          height: 40,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            color: Colors.blue.shade500,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 170,
+                      ),
+                      InkWell(
+                        onTap: () => fetchWalletAmount(),
+                        child: Container(
+                          child: Center(child: Text('Check Balance')),
+                          height: 40,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            color: Colors.blue.shade500,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                         ),
                       ),
                     ],
                   ),
+                  SizedBox(height: 50),
                 ],
               ),
             ),
