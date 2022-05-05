@@ -9,6 +9,7 @@ Map<String, dynamic> mapdata = <String, dynamic>{
 };
 
 TextEditingController myController = TextEditingController();
+// String? uid = FirebaseAuth.instance.currentUser?.uid;
 DocumentReference documentReference =
     FirebaseFirestore.instance.doc("myData/walletData");
 

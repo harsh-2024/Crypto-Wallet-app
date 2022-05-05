@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'screen_pages/new_userReg.dart';
+import 'package:toast/toast.dart';
 
 String email = "";
 String pwd = "";
@@ -22,6 +23,10 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> userSignIn() async {
     UserCredential userCredential = await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: pwd);
+  }
+
+  void showToast(String msg, {int? duration, int? gravity}) {
+    Toast.show(msg, duration: duration, gravity: gravity);
   }
 
   Future<UserCredential> signIn() async {
@@ -49,6 +54,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    ToastContext().init(context);
     return Scaffold(
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
@@ -59,54 +65,74 @@ class _LoginPageState extends State<LoginPage> {
                 child: Image(
                     image:
                         AssetImage('images/undraw_login_re_4vu2 1 (1).png'))),
-            Text('lets\nstart',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 60,
-                    fontWeight: FontWeight.w200)),
+            Row(
+              children: [
+                SizedBox(width: 20),
+                Text('lets\nstart',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 60,
+                        fontWeight: FontWeight.w200)),
+              ],
+            ),
             SizedBox(height: 20),
-            TextFormField(
-                onChanged: (value) => {email = value},
-                style: TextStyle(color: Colors.white),
-                cursorColor: Colors.white24,
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(20)),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blueGrey.shade400),
-                        borderRadius: BorderRadius.circular(20)),
-                    fillColor: Colors.white,
-                    hintStyle: TextStyle(color: Colors.white),
-                    hintText: 'Enter email')),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              child: TextFormField(
+                  onChanged: (value) => {email = value},
+                  style: TextStyle(color: Colors.white),
+                  cursorColor: Colors.white24,
+                  decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(30)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.blueGrey.shade400),
+                          borderRadius: BorderRadius.circular(20)),
+                      fillColor: Colors.white,
+                      hintStyle: TextStyle(color: Colors.white),
+                      hintText: 'Enter email')),
+            ),
             SizedBox(
               height: 15,
             ),
-            TextFormField(
-                onChanged: (value) => {pwd = value},
-                obscureText: true,
-                style: TextStyle(color: Colors.white),
-                cursorColor: Colors.white24,
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(20)),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blueGrey.shade400),
-                        borderRadius: BorderRadius.circular(20)),
-                    fillColor: Colors.white,
-                    hintStyle: TextStyle(color: Colors.white),
-                    hintText: 'Enter your Password')),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              child: TextFormField(
+                  onChanged: (value) => {pwd = value},
+                  obscureText: true,
+                  style: TextStyle(color: Colors.white),
+                  cursorColor: Colors.white24,
+                  decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(30)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.blueGrey.shade400),
+                          borderRadius: BorderRadius.circular(20)),
+                      fillColor: Colors.white,
+                      hintStyle: TextStyle(color: Colors.white),
+                      hintText: 'Enter your Password')),
+            ),
             SizedBox(
               height: 30,
             ),
             Center(
                 child: Row(
               children: [
+                SizedBox(
+                  width: 20,
+                ),
                 InkWell(
-                  onTap: () => userSignIn().then((value) => Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: ((context) => Screen1())))),
+                  onTap: () => userSignIn()
+                      .whenComplete(() => showToast("Sign In Successfull",
+                          gravity: Toast.bottom))
+                      .then((value) => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => Screen1())))),
                   child: Container(
                     child: Center(child: Text('Go')),
                     height: 40,
@@ -121,7 +147,11 @@ class _LoginPageState extends State<LoginPage> {
                   width: 20,
                 ),
                 InkWell(
-                  onTap: () => forgotPassEmailLink(),
+                  onTap: () => forgotPassEmailLink().whenComplete(() =>
+                      showToast(
+                          "A reset password link has been sent to your Email",
+                          gravity: Toast.bottom,
+                          duration: 5)),
                   child: Text(
                     'Forgot Password?',
                     style: TextStyle(color: Colors.blueAccent),
@@ -131,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                 NewUserLink()
               ],
             )),
-            SizedBox(height: 10),
+            SizedBox(height: 30),
             Divider(
               color: Colors.white54,
               endIndent: 30,
@@ -143,8 +173,13 @@ class _LoginPageState extends State<LoginPage> {
             // GoogleButton()
             Center(
               child: InkWell(
-                onTap: () => signIn().then((value) => Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => Screen1())))),
+                onTap: () => signIn()
+                    .whenComplete(() => showToast(
+                        "Sign In Successfull via Google",
+                        gravity: Toast.bottom,
+                        duration: 7))
+                    .then((value) => Navigator.push(context,
+                        MaterialPageRoute(builder: ((context) => Screen1())))),
                 child: Container(
                   padding: EdgeInsets.all(7),
                   decoration: BoxDecoration(
