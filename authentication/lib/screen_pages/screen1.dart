@@ -43,71 +43,176 @@ class _Screen1State extends State<Screen1> {
     return Scaffold(
         backgroundColor: Colors.black,
         body: SafeArea(
-          child: Card(
-            margin: EdgeInsets.only(left: 10, top: 20, right: 10, bottom: 20),
-            color: Colors.white10,
-            child: SizedBox(
-              height: 400,
-              width: 500,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  SizedBox(width: 10),
                   Text(
-                    ' Your Wallet ',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 40,
-                        fontWeight: FontWeight.w300),
+                    "Welcome 🙋‍♂️\n User",
+                    style: TextStyle(color: Colors.white38, fontSize: 30),
                   ),
-                  Text(
-                    ' ₹$addedAmount',
-                    style: TextStyle(color: Colors.white, fontSize: 40),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      InkWell(
-                        onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => InputAmount()))
-                            .whenComplete(() => showToast(
-                                "Money Added to Wallet",
-                                gravity: Toast.bottom,
-                                duration: 5)),
-                        child: Container(
-                          child: Center(child: Text('Add Money')),
-                          height: 40,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: Colors.blue.shade500,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
+                ],
+              ),
+              SizedBox(height: 30),
+              Card(
+                margin:
+                    EdgeInsets.only(left: 10, top: 20, right: 10, bottom: 20),
+                color: Colors.white10,
+                child: SizedBox(
+                  height: 200,
+                  width: 500,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(height: 10),
+                      Text(
+                        ' Your Wallet ',
+                        style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 40,
+                            fontWeight: FontWeight.w300),
+                      ),
+                      Text(
+                        ' ₹$addedAmount',
+                        style: TextStyle(color: Colors.white70, fontSize: 40),
                       ),
                       SizedBox(
-                        width: 170,
+                        height: 20,
                       ),
-                      InkWell(
-                        onTap: () => fetchWalletAmount(),
-                        child: Container(
-                          child: Center(child: Text('Check Balance')),
-                          height: 40,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: Colors.blue.shade500,
-                            borderRadius: BorderRadius.circular(20),
+                      Row(
+                        children: [
+                          SizedBox(width: 20),
+                          InkWell(
+                            onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => InputAmount()))
+                                .whenComplete(() => showToast(
+                                    "Money Added to Wallet",
+                                    gravity: Toast.bottom,
+                                    duration: 5)),
+                            child: Container(
+                              child: Center(child: Text('Add Money')),
+                              height: 40,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                color: Colors.blue.shade500,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
                           ),
-                        ),
+                          SizedBox(
+                            width: 120,
+                          ),
+                          InkWell(
+                            onTap: () => fetchWalletAmount(),
+                            child: Container(
+                              child: Center(child: Text('Check Balance')),
+                              height: 40,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                color: Colors.blue.shade500,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                  SizedBox(height: 50),
+                ),
+              ),
+              Row(
+                children: [
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: InkWell(
+                      onTap: () => null,
+                      child: Container(
+                        child: Center(child: Text('Transaction History')),
+                        height: 40,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.blue.shade500,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 10),
                 ],
               ),
-            ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                            color: Colors.blueGrey,
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Center(
+                            child: Text(
+                          "Add BTC",
+                          style: TextStyle(color: Colors.white24),
+                        )),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                            color: Colors.blueGrey,
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Center(
+                            child: Text(
+                          "Add ETH",
+                          style: TextStyle(color: Colors.white24),
+                        )),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                            color: Colors.blueGrey,
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Center(
+                            child: Text(
+                          "Add SOL",
+                          style: TextStyle(color: Colors.white24),
+                        )),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                ],
+              )
+            ],
           ),
         ));
   }
