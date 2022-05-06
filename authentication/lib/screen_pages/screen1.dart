@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'addMoneypage.dart';
+import 'package:toast/toast.dart';
 
 int addedAmount = 0;
 
@@ -20,6 +21,10 @@ class Screen1 extends StatefulWidget {
 }
 
 class _Screen1State extends State<Screen1> {
+  void showToast(String msg, {int? duration, int? gravity}) {
+    Toast.show(msg, duration: duration, gravity: gravity);
+  }
+
   void fetchWalletAmount() async {
     await documentReference.get().then((datasnapshot) => {
           addedAmount = fetchedData["walletAmount"],
@@ -65,9 +70,13 @@ class _Screen1State extends State<Screen1> {
                     children: [
                       InkWell(
                         onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => InputAmount())),
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => InputAmount()))
+                            .whenComplete(() => showToast(
+                                "Money Added to Wallet",
+                                gravity: Toast.bottom,
+                                duration: 5)),
                         child: Container(
                           child: Center(child: Text('Add Money')),
                           height: 40,
