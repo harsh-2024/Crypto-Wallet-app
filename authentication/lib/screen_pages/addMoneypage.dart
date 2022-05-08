@@ -21,14 +21,14 @@ class InputAmount extends StatefulWidget {
 }
 
 class _InputAmountState extends State<InputAmount> {
-  void addMoney() {
+  Future<void> addMoney() async {
     // mapdata["walletAmount"] += int.parse(myController.text);
     documentReference
         .set(mapdata)
         .whenComplete(() => print("document added to firebase"));
   }
 
-  void updateWalletMoney() {
+  Future<void> updateWalletMoney() async {
     mapdata["walletAmount"] += int.parse(myController.text);
     documentReference.update(mapdata);
   }
@@ -60,7 +60,9 @@ class _InputAmountState extends State<InputAmount> {
               height: 10,
             ),
             InkWell(
-              onTap: () => {addMoney(), updateWalletMoney()},
+              onTap: () => addMoney()
+                  .whenComplete(() => updateWalletMoney())
+                  .whenComplete(() => Navigator.pop(context)),
               child: Container(
                 child: Center(child: Text('Add')),
                 height: 40,

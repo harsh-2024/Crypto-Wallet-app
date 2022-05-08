@@ -1,10 +1,12 @@
 import 'dart:ui';
+import 'package:authentication/screen_pages/buyBTCpage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'addMoneypage.dart';
 import 'package:toast/toast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 int addedAmount = 0;
 
@@ -155,6 +157,43 @@ class _Screen1State extends State<Screen1> {
                   ),
                   Expanded(
                     child: InkWell(
+                      onTap: () => Navigator.push(context,
+                          MaterialPageRoute(builder: ((context) => BTC()))),
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                            color: Colors.blueGrey,
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              "Buy BTC",
+                              style: TextStyle(
+                                  color: Colors.white24,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            // SizedBox(
+                            //   height: 20,
+                            // ),
+
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(mapdata["btcAmount"].toString()),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: InkWell(
                       child: Container(
                         height: 100,
                         width: 100,
@@ -163,7 +202,7 @@ class _Screen1State extends State<Screen1> {
                             borderRadius: BorderRadius.circular(15)),
                         child: Center(
                             child: Text(
-                          "Add BTC",
+                          "Buy ETH",
                           style: TextStyle(color: Colors.white24),
                         )),
                       ),
@@ -182,26 +221,7 @@ class _Screen1State extends State<Screen1> {
                             borderRadius: BorderRadius.circular(15)),
                         child: Center(
                             child: Text(
-                          "Add ETH",
-                          style: TextStyle(color: Colors.white24),
-                        )),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: InkWell(
-                      child: Container(
-                        height: 100,
-                        width: 100,
-                        decoration: BoxDecoration(
-                            color: Colors.blueGrey,
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Center(
-                            child: Text(
-                          "Add SOL",
+                          "Buy SOL",
                           style: TextStyle(color: Colors.white24),
                         )),
                       ),
