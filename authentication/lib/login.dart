@@ -12,6 +12,9 @@ import 'package:toast/toast.dart';
 String email = "";
 String pwd = "";
 
+// late final UserCredential userCredential ;
+User? user;
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -36,20 +39,30 @@ class _LoginPageState extends State<LoginPage> {
     final GoogleSignInAuthentication? googleSignInAuthentication =
         await googleSignInAccount?.authentication;
 
-    final credential = GoogleAuthProvider.credential(
+    final OAuthCredential credential = GoogleAuthProvider.credential(
         idToken: googleSignInAuthentication?.idToken,
         accessToken: googleSignInAuthentication?.accessToken);
+
+    final userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+    final user = userCredential.user;
 
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
-  Future<void> userSignUp() async {
-    UserCredential userCredential = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email, password: pwd);
-  }
+  // Future<void> userSignUp() async {
+  //   UserCredential userCredential = await FirebaseAuth.instance
+  //       .signInWithEmailAndPassword(email: email, password: pwd);
+  // }
 
   Future<void> forgotPassEmailLink() async {
     await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
 
   @override

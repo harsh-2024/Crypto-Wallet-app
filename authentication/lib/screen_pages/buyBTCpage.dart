@@ -19,7 +19,7 @@ class _BTCState extends State<BTC> {
   Future<void> updateBTC() async {
     mapdata["walletAmount"] -= int.parse(myControllerbtc.text);
     mapdata["btcAmount"] += int.parse(myControllerbtc.text);
-    documentReference.update(mapdata);
+    await documentReference.update(mapdata);
   }
 
   @override
@@ -54,12 +54,15 @@ class _BTCState extends State<BTC> {
             height: 15,
           ),
           InkWell(
-            // onTap: mapdata["walletAmount"]>=myControllerbtc.text ? updateBTC() : showToast("Insufficient Balance", gravity: Toast.bottom);
+            onTap: () =>
+                mapdata["walletAmount"] >= int.parse(myControllerbtc.text)
+                    ? updateBTC()
+                    : showToast("Insufficient Balance", gravity: Toast.bottom),
 
-            onTap: () => updateBTC()
-                .whenComplete(() => showToast("Bitcoin is added",
-                    gravity: Toast.bottom, duration: 7))
-                .then((value) => Navigator.pop(context)),
+            // onTap: () => updateBTC()
+            //     .whenComplete(() => showToast("Bitcoin is added",
+            //         gravity: Toast.bottom, duration: 7))
+            //     .then((value) => Navigator.pop(context)),
             child: Container(
               child: Center(child: Text('Buy')),
               height: 40,

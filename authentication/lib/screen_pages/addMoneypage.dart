@@ -1,3 +1,4 @@
+import 'package:authentication/login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,13 +6,15 @@ import 'package:firebase_core/firebase_core.dart';
 
 Map<String, dynamic> mapdata = <String, dynamic>{
   "walletAmount": 0,
-  "btcAmount": 0
+  "btcAmount": 0,
+  "ethAmount": 0,
+  "solAmount": 0
 };
 
 TextEditingController myController = TextEditingController();
-// String? uid = FirebaseAuth.instance.currentUser?.uid;
+String? uid = FirebaseAuth.instance.currentUser?.uid;
 DocumentReference documentReference =
-    FirebaseFirestore.instance.doc("myData/walletData");
+    FirebaseFirestore.instance.doc("myData/$uid");
 
 class InputAmount extends StatefulWidget {
   const InputAmount({Key? key}) : super(key: key);
@@ -23,6 +26,7 @@ class InputAmount extends StatefulWidget {
 class _InputAmountState extends State<InputAmount> {
   Future<void> addMoney() async {
     // mapdata["walletAmount"] += int.parse(myController.text);
+
     documentReference
         .set(mapdata)
         .whenComplete(() => print("document added to firebase"));
@@ -60,9 +64,15 @@ class _InputAmountState extends State<InputAmount> {
               height: 10,
             ),
             InkWell(
-              onTap: () => addMoney()
-                  .whenComplete(() => updateWalletMoney())
-                  .whenComplete(() => Navigator.pop(context)),
+              onTap: () => user != null
+                  ? updateWalletMoney()
+                      .whenComplete(() => Navigator.pop(context))
+                  : addMoney()
+                      .whenComplete(() => updateWalletMoney())
+                      .whenComplete(() => Navigator.pop(context)),
+              // onTap: () => addMoney()
+              //     .whenComplete(() => updateWalletMoney())
+              //     .whenComplete(() => Navigator.pop(context)),
               child: Container(
                 child: Center(child: Text('Add')),
                 height: 40,

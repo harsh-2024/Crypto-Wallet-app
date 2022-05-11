@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:authentication/login.dart';
 import 'package:authentication/screen_pages/buyBTCpage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,12 +8,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'addMoneypage.dart';
 import 'package:toast/toast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 int addedAmount = 0;
 
 Map<dynamic, dynamic> fetchedData = <String, dynamic>{
   "walletAmount": 0,
-  "btcAmount": 0
+  "btcAmount": 0,
+  "ethAmount": 0,
+  "solAmount": 0
 };
 
 class Screen1 extends StatefulWidget {
@@ -23,6 +27,15 @@ class Screen1 extends StatefulWidget {
 }
 
 class _Screen1State extends State<Screen1> {
+  Future<void> signout() async {
+    // final GoogleSignIn googleSignIn = GoogleSignIn();
+    // googleSignIn.signOut();
+    // FirebaseAuth.instance.signOut();
+
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    googleSignIn.signOut();
+  }
+
   void showToast(String msg, {int? duration, int? gravity}) {
     Toast.show(msg, duration: duration, gravity: gravity);
   }
@@ -56,6 +69,16 @@ class _Screen1State extends State<Screen1> {
                     "Welcome 🙋‍♂️\n User",
                     style: TextStyle(color: Colors.white38, fontSize: 30),
                   ),
+                  SizedBox(width: 100),
+                  InkWell(
+                    child: Text(
+                      "Logout",
+                      style:
+                          TextStyle(color: Colors.blue.shade400, fontSize: 30),
+                    ),
+                    onTap: () =>
+                        signout().whenComplete(() => Navigator.pop(context)),
+                  )
                 ],
               ),
               SizedBox(height: 30),
