@@ -10,6 +10,9 @@ import 'package:toast/toast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'buyETH.dart';
+import 'buySOL.dart';
+
 int addedAmount = 0;
 
 Map<dynamic, dynamic> fetchedData = <String, dynamic>{
@@ -217,17 +220,35 @@ class _Screen1State extends State<Screen1> {
                   ),
                   Expanded(
                     child: InkWell(
+                      onTap: () => Navigator.push(context,
+                          MaterialPageRoute(builder: ((context) => ETH()))),
                       child: Container(
                         height: 100,
                         width: 100,
                         decoration: BoxDecoration(
                             color: Colors.blueGrey,
                             borderRadius: BorderRadius.circular(15)),
-                        child: Center(
-                            child: Text(
-                          "Buy ETH",
-                          style: TextStyle(color: Colors.white24),
-                        )),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              "Buy ETH",
+                              style: TextStyle(
+                                  color: Colors.white24,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            // SizedBox(
+                            //   height: 20,
+                            // ),
+
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(mapdata["ethAmount"].toString()),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -236,17 +257,35 @@ class _Screen1State extends State<Screen1> {
                   ),
                   Expanded(
                     child: InkWell(
+                      onTap: () => Navigator.push(context,
+                          MaterialPageRoute(builder: ((context) => SOL()))),
                       child: Container(
                         height: 100,
                         width: 100,
                         decoration: BoxDecoration(
                             color: Colors.blueGrey,
                             borderRadius: BorderRadius.circular(15)),
-                        child: Center(
-                            child: Text(
-                          "Buy SOL",
-                          style: TextStyle(color: Colors.white24),
-                        )),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              "Buy SOL",
+                              style: TextStyle(
+                                  color: Colors.white24,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            // SizedBox(
+                            //   height: 20,
+                            // ),
+
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(mapdata["solAmount"].toString()),
+                          ],
+                        ),
                       ),
                     ),
                   ),
