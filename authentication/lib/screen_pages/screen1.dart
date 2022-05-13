@@ -9,11 +9,15 @@ import 'addMoneypage.dart';
 import 'package:toast/toast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'addMoneypage.dart';
 
 import 'buyETH.dart';
 import 'buySOL.dart';
+// import 'user_info.dart';
 
 int addedAmount = 0;
+// UserInfoPro userInfoPro = UserInfoPro();
+// String? users_name = "";
 
 Map<dynamic, dynamic> fetchedData = <String, dynamic>{
   "walletAmount": 0,
@@ -43,6 +47,14 @@ class _Screen1State extends State<Screen1> {
     Toast.show(msg, duration: duration, gravity: gravity);
   }
 
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   users_name = userInfoPro.name;
+  //   print(users_name);
+  // }
+
   void fetchWalletAmount() async {
     await documentReference.get().then((datasnapshot) => {
           addedAmount = fetchedData["walletAmount"],
@@ -69,15 +81,15 @@ class _Screen1State extends State<Screen1> {
                 children: [
                   SizedBox(width: 10),
                   Text(
-                    "Welcome 🙋‍♂️\n User",
-                    style: TextStyle(color: Colors.white38, fontSize: 30),
+                    "Welcome 🙋‍♂️",
+                    style: TextStyle(color: Colors.white38, fontSize: 20),
                   ),
-                  SizedBox(width: 100),
+                  SizedBox(width: 140),
                   InkWell(
                     child: Text(
                       "Logout",
                       style:
-                          TextStyle(color: Colors.blue.shade400, fontSize: 30),
+                          TextStyle(color: Colors.blue.shade400, fontSize: 20),
                     ),
                     onTap: () =>
                         signout().whenComplete(() => Navigator.pop(context)),
@@ -156,20 +168,20 @@ class _Screen1State extends State<Screen1> {
               Row(
                 children: [
                   SizedBox(width: 10),
-                  Expanded(
-                    child: InkWell(
-                      onTap: () => null,
-                      child: Container(
-                        child: Center(child: Text('Transaction History')),
-                        height: 40,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.blue.shade500,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Expanded(
+                  //   child: InkWell(
+                  //     onTap: () => null,
+                  //     child: Container(
+                  //       child: Center(child: Text('Transaction History')),
+                  //       height: 40,
+                  //       width: 100,
+                  //       decoration: BoxDecoration(
+                  //         color: Colors.blue.shade500,
+                  //         borderRadius: BorderRadius.circular(20),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(width: 10),
                 ],
               ),

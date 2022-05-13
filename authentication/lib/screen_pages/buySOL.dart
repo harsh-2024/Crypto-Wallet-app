@@ -56,7 +56,7 @@ class _SOLState extends State<SOL> {
           InkWell(
             onTap: () =>
                 mapdata["walletAmount"] >= int.parse(myControllersol.text)
-                    ? updateSOL()
+                    ? updateSOL().whenComplete(() => Navigator.pop(context))
                     : showToast("Insufficient Balance", gravity: Toast.bottom),
 
             // onTap: () => updateBTC()

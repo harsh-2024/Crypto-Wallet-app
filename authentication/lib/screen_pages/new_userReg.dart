@@ -77,6 +77,7 @@ class _NewUserRegState extends State<NewUserReg> {
             height: 10,
           ),
           InkWell(
+            // onTap: signUp,
             onTap: () => signUp()
                 .whenComplete(() => showToast(
                     "Your new account has been created",

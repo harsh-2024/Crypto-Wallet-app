@@ -56,7 +56,7 @@ class _ETHState extends State<ETH> {
           InkWell(
             onTap: () =>
                 mapdata["walletAmount"] >= int.parse(myControllereth.text)
-                    ? updateETH()
+                    ? updateETH().whenComplete(() => Navigator.pop(context))
                     : showToast("Insufficient Balance", gravity: Toast.bottom),
 
             // onTap: () => updateBTC()

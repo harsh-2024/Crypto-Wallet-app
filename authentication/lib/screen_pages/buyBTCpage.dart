@@ -56,7 +56,7 @@ class _BTCState extends State<BTC> {
           InkWell(
             onTap: () =>
                 mapdata["walletAmount"] >= int.parse(myControllerbtc.text)
-                    ? updateBTC()
+                    ? updateBTC().whenComplete(() => Navigator.pop(context))
                     : showToast("Insufficient Balance", gravity: Toast.bottom),
 
             // onTap: () => updateBTC()

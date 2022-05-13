@@ -14,6 +14,7 @@ String pwd = "";
 
 // late final UserCredential userCredential ;
 User? user;
+String? user_name;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  Future<void> userSignIn() async {
+  Future<void> emailSignIn() async {
     UserCredential userCredential = await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: pwd);
   }
@@ -46,10 +47,17 @@ class _LoginPageState extends State<LoginPage> {
     final userCredential =
         await FirebaseAuth.instance.signInWithCredential(credential);
     final user = userCredential.user;
-
+    // user_name = user!.displayName;
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   user_name = user!.displayName;
+  //   print(user_name);
+  // }
   // Future<void> userSignUp() async {
   //   UserCredential userCredential = await FirebaseAuth.instance
   //       .signInWithEmailAndPassword(email: email, password: pwd);
@@ -57,12 +65,6 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> forgotPassEmailLink() async {
     await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
   }
 
   @override
@@ -139,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: 20,
                 ),
                 InkWell(
-                  onTap: () => userSignIn()
+                  onTap: () => emailSignIn()
                       .whenComplete(() => showToast("Sign In Successfull",
                           gravity: Toast.bottom))
                       .then((value) => Navigator.push(
